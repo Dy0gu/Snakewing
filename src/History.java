@@ -51,7 +51,7 @@ public class History extends JPanel {
         add(longestGameValueLabel, gbc);
 
         // Back button
-        JButton backButton = new JButton("◄");
+        JButton backButton = new JButton("BACK");
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

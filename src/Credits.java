@@ -11,14 +11,14 @@ public class Credits extends JPanel {
         setLayout(new GridBagLayout());
 
         // Text label
-        JLabel textLabel = new JLabel("Made with ♥ by Dy0gu!");
+        JLabel textLabel = new JLabel("Made with love, by Dy0gu!");
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(15, 0, 15, 0);
         add(textLabel, gbc);
 
         // Back button
-        JButton backButton = new JButton("◄");
+        JButton backButton = new JButton("BACK");
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

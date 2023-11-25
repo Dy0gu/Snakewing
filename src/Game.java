@@ -250,59 +250,21 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             return;
         }
 
-        // Setup pause panel
-        JPanel pause = new JPanel();
-        pause.setOpaque(true);
-        pause.setFocusable(true);
-        pause.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        pause.setBackground(Theme.getSecondary(Theme.getCurrent()));
-        JLabel pauseLabel = new JLabel("GAME PAUSED!");
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(15, 0, 15, 0);
-        pause.add(pauseLabel, gbc);
-        JButton continueButton = new JButton("CONTINUE");
-        continueButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                countdown = COUNTDOWN;
-                state = GameState.COUNTDOWN;
-                remove(pause);
-            }
-        });
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.insets = new Insets(15, 0, 15, 0);
-        pause.add(continueButton, gbc);
-        JButton restartButton = new JButton("RESTART");
-        restartButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setup();
-                remove(pause);
-            }
-        });
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.insets = new Insets(15, 0, 15, 0);
-        pause.add(restartButton, gbc);
-        // add menu button
-        JButton menuButton = new JButton("MENU");
-        menuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Router.goBack();
-            }
-        });
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.insets = new Insets(15, 0, 15, 0);
-        pause.add(menuButton, gbc);
-
         state = GameState.PAUSED;
-        add(pause);
 
+        String info = "GAME PAUSED!";
+        ArrayList<String> buttons = new ArrayList<String>(Arrays.asList("CONTINUE", "RESTART", "MENU"));
+        int choice = Utils.dialog(getParent(), info, buttons);
+
+        if (choice == 0) {
+            // Unpause
+            countdown = COUNTDOWN;
+            state = GameState.COUNTDOWN;
+        } else if (choice == 1) {
+            setup();
+        } else {
+            Router.goBack();
+        }
     }
 
     @Override
@@ -348,6 +310,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (state != GameState.PLAYING) {
+            return;
+        }
+
         int key = e.getKeyCode();
 
         switch (key) {
@@ -368,7 +334,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                     movement = Movement.LEFT;
                 break;
             case KeyEvent.VK_ESCAPE:
-                state = GameState.PAUSED;
                 pause();
                 break;
         }

@@ -105,7 +105,7 @@ public class Preferences {
         public Data() {
             this.theme = Themes.DARK;
             this.style = Styles.CLASSIC;
-            this.borderless = false;
+            this.borderless = true;
             this.focusPause = false;
             this.wallsloop = false;
         }

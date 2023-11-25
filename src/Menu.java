@@ -19,7 +19,7 @@ public class Menu extends JPanel {
         add(titleLabel, gbc);
 
         // Play button
-        JButton playButton = new JButton("Play");
+        JButton playButton = new JButton("PLAY");
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ public class Menu extends JPanel {
         add(playButton, gbc);
 
         // History button
-        JButton historyButton = new JButton("History");
+        JButton historyButton = new JButton("HISTORY");
         historyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,7 +45,7 @@ public class Menu extends JPanel {
         add(historyButton, gbc);
 
         // Settings button
-        JButton settingsButton = new JButton("Settings");
+        JButton settingsButton = new JButton("SETTINGS");
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,7 +58,7 @@ public class Menu extends JPanel {
         add(settingsButton, gbc);
 
         // Credits button
-        JButton creditsButton = new JButton("Credits");
+        JButton creditsButton = new JButton("CREDITS");
         creditsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,8 +71,8 @@ public class Menu extends JPanel {
         add(creditsButton, gbc);
 
         // Exit button
-        JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(new ActionListener() {
+        JButton quitButton = new JButton("QUIT");
+        quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -81,6 +81,6 @@ public class Menu extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.insets = new Insets(15, 0, 15, 0);
-        add(exitButton, gbc);
+        add(quitButton, gbc);
     }
 }

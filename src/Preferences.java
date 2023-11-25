@@ -77,6 +77,15 @@ public class Preferences {
         save();
     }
 
+    public static boolean isFocusPause() {
+        return instance.data.focusPause;
+    }
+
+    public static void setFocusPause(boolean focusPause) {
+        instance.data.focusPause = focusPause;
+        save();
+    }
+
     public static boolean isWallsLoop() {
         return instance.data.wallsloop;
     }
@@ -90,12 +99,14 @@ public class Preferences {
         private Themes theme;
         private Styles style;
         private boolean borderless;
+        private boolean focusPause;
         private boolean wallsloop;
 
         public Data() {
             this.theme = Themes.DARK;
             this.style = Styles.CLASSIC;
             this.borderless = false;
+            this.focusPause = false;
             this.wallsloop = false;
         }
     }

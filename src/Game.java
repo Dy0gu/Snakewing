@@ -27,8 +27,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private double elapsed;
     private double countdown;
 
-    private boolean wallsLoop;
-
     private int rows, cols;
     private ArrayList<Point> food;
     private ArrayList<Point> snake;
@@ -38,19 +36,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         setOpaque(true);
         setFocusable(true);
 
-        wallsLoop = Preferences.isWallsLoop();
-
         addKeyListener(this);
 
         timer = new Timer(REFRESH_RATE, this);
         timer.stop();
 
-        Router.getFrame().addWindowFocusListener(new WindowAdapter() {
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                pause();
-            }
-        });
+        if (Preferences.isFocusPause()) {
+            Router.getFrame().addWindowFocusListener(new WindowAdapter() {
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    pause();
+                }
+            });
+        }
 
         // Game being added to the frame counts as a resize so setup is called
         addComponentListener(new ComponentAdapter() {
@@ -99,7 +97,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         movement = Movement.RIGHT;
 
         if (Savegame.getGamesPlayed() == 0) {
-            String info = "It seems this is your first game!\n Use the arrow keys to move, press ESC to pause.";
+            String info = "It seems this is your first game!\nUse the arrow keys to move, press ESC to pause.";
             Utils.dialog(getParent(), info, new ArrayList<String>(
                     Arrays.asList("OK")));
         }
@@ -168,6 +166,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         // Move the snake body forward
         Point previous = snake.get(0);
         Point head;
+
+        boolean wallsLoop = Preferences.isWallsLoop();
 
         switch (movement) {
             case UP:
@@ -250,20 +250,59 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             return;
         }
 
-        state = GameState.PAUSED;
-        String info = "GAME PAUSED!";
-        ArrayList<String> buttons = new ArrayList<String>(Arrays.asList("CONTINUE", "RESTART", "MENU"));
-        int choice = Utils.dialog(getParent(), info, buttons);
+        // Setup pause panel
+        JPanel pause = new JPanel();
+        pause.setOpaque(true);
+        pause.setFocusable(true);
+        pause.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        pause.setBackground(Theme.getSecondary(Theme.getCurrent()));
+        JLabel pauseLabel = new JLabel("GAME PAUSED!");
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(15, 0, 15, 0);
+        pause.add(pauseLabel, gbc);
+        JButton continueButton = new JButton("CONTINUE");
+        continueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                countdown = COUNTDOWN;
+                state = GameState.COUNTDOWN;
+                remove(pause);
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(15, 0, 15, 0);
+        pause.add(continueButton, gbc);
+        JButton restartButton = new JButton("RESTART");
+        restartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setup();
+                remove(pause);
+            }
+        });
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(15, 0, 15, 0);
+        pause.add(restartButton, gbc);
+        // add menu button
+        JButton menuButton = new JButton("MENU");
+        menuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Router.goBack();
+            }
+        });
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(15, 0, 15, 0);
+        pause.add(menuButton, gbc);
 
-        if (choice == 0) {
-            // Unpause
-            countdown = COUNTDOWN;
-            state = GameState.COUNTDOWN;
-        } else if (choice == 1) {
-            setup();
-        } else {
-            Router.goBack();
-        }
+        state = GameState.PAUSED;
+        add(pause);
+
     }
 
     @Override
@@ -271,11 +310,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        if (timer == null) {
+        if (state == null) {
             return;
         }
 
-        g.setColor(Color.WHITE);
+        g.setColor(Theme.getSecondary(Theme.getCurrent()));
         g.setFont(Preferences.BODY);
         g.drawString("Time: " + (int) elapsed + "s", 10, 20);
         g.drawString("Score: " + (int) score, 10, 40);
@@ -329,6 +368,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                     movement = Movement.LEFT;
                 break;
             case KeyEvent.VK_ESCAPE:
+                state = GameState.PAUSED;
                 pause();
                 break;
         }

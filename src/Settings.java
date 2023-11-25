@@ -25,9 +25,9 @@ public class Settings extends JPanel {
         styleLabel.setLabelFor(styleComboBox);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(15, 5, 15, 40);
+        gbc.insets = new Insets(15, 0, 15, 40);
         add(styleLabel, gbc);
-        gbc.insets = new Insets(15, 150, 15, 0);
+        gbc.insets = new Insets(15, 250, 15, 0);
         add(styleComboBox, gbc);
 
         // Theme combo box
@@ -47,7 +47,7 @@ public class Settings extends JPanel {
         gbc.gridy = 1;
         gbc.insets = new Insets(15, 5, 15, 30);
         add(themeLabel, gbc);
-        gbc.insets = new Insets(15, 150, 15, 0);
+        gbc.insets = new Insets(15, 250, 15, 0);
         add(themeComboBox, gbc);
 
         // Borderless checkbox
@@ -69,8 +69,26 @@ public class Settings extends JPanel {
         gbc.gridy = 2;
         gbc.insets = new Insets(15, 5, 15, 0);
         add(borderlessLabel, gbc);
-        gbc.insets = new Insets(15, 150, 15, 0);
+        gbc.insets = new Insets(15, 250, 15, 0);
         add(borderlessCheckbox, gbc);
+
+        // Focus pause checkbox
+        JLabel focusPauseLabel = new JLabel("Focus loss pause:");
+        JCheckBox focusPauseCheckbox = new JCheckBox();
+        focusPauseCheckbox.setSelected(Preferences.isFocusPause());
+        focusPauseCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preferences.setFocusPause(focusPauseCheckbox.isSelected());
+            }
+        });
+        focusPauseLabel.setLabelFor(focusPauseCheckbox);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(15, 55, 15, 0);
+        add(focusPauseLabel, gbc);
+        gbc.insets = new Insets(15, 250, 15, 0);
+        add(focusPauseCheckbox, gbc);
 
         // Walls Loop checkbox
         JLabel wallsLoopLabel = new JLabel("Walls loop:");
@@ -84,10 +102,10 @@ public class Settings extends JPanel {
         });
         wallsLoopLabel.setLabelFor(wallsLoopCheckbox);
         gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.insets = new Insets(15, 5, 15, 0);
+        gbc.gridy = 4;
+        gbc.insets = new Insets(15, 0, 15, 0);
         add(wallsLoopLabel, gbc);
-        gbc.insets = new Insets(15, 150, 15, 0);
+        gbc.insets = new Insets(15, 250, 15, 0);
         add(wallsLoopCheckbox, gbc);
 
         // Back button
@@ -99,8 +117,8 @@ public class Settings extends JPanel {
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.insets = new Insets(30, 40, 15, 0);
+        gbc.gridy = 5;
+        gbc.insets = new Insets(30, 100, 15, 0);
         add(backButton, gbc);
     }
 }

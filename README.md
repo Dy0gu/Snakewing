@@ -2,21 +2,23 @@
 
 ![logo](.github/assets/logo.png)
 
-Snakeswing is a simple snake game implementation that experiments with Java singletons, building up to a very rudimentary engine. It includes an implementation of a modern app routing system to nagivate the UI outisde of the game as well as theme and style management with data permanence.
+Snakewing is a simple snake game implementation that experiments with singletons, building up to a very rudimentary engine/framework. It includes an implementation of a modern app routing system to nagivate the UI outisde of the game as well as theme and style management with data permanence.
 
 ## Installation 🛠️
 
 * Clone the repository
 
   ```shell
-  git clone https://github.com/Dy0gu/Snakeswing.git
+  git clone https://github.com/Dy0gu/Snakewing.git
   ```
+
+* Install the JDK 17 or newer.
 
 * Compile the source code:
 
   ```shell
     javac -d bin src/*.java
-    jar cfe bin/Snakeswing.jar Main -C bin .
+    jar cfe bin/Snakewing.jar Main -C bin .
   ```
 
 ## Usage 🚩
@@ -24,5 +26,5 @@ Snakeswing is a simple snake game implementation that experiments with Java sing
 * Launch the game:
 
   ```shell
-  java -jar bin/Snakeswing.jar
+  java -jar bin/Snakewing.jar
   ```

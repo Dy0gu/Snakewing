@@ -15,17 +15,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         UP, RIGHT, DOWN, LEFT
     }
 
-    private static final int REFRESH_RATE = 60;
     private static final double COUNTDOWN = 3.9;
     private static final int CELL_SIZE = 20;
     private static final int MAX_FOOD = 2;
     private static final int STARTING_SNAKE_SIZE = 4;
 
+    private int tickRate;
     private GameState state;
     private Timer timer;
     private double score;
     private double elapsed;
     private double countdown;
+    private boolean updated;
 
     private int rows, cols;
     private ArrayList<Point> food;
@@ -38,7 +39,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         addKeyListener(this);
 
-        timer = new Timer(REFRESH_RATE, this);
+        tickRate = Preferences.getTickRate();
+
+        timer = new Timer(tickRate, this);
         timer.stop();
 
         if (Preferences.isFocusPause()) {
@@ -64,6 +67,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         timer.stop();
 
         // Reset game info
+        updated = false;
         score = 0;
         elapsed = 0;
 
@@ -243,6 +247,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             state = GameState.OVER;
         }
 
+        updated = true;
     }
 
     private void pause() {
@@ -310,10 +315,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (state != GameState.PLAYING) {
+        if (state != GameState.PLAYING || !updated) {
             return;
         }
 
+        updated = false;
         int key = e.getKeyCode();
 
         switch (key) {

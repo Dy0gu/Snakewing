@@ -12,7 +12,7 @@ public class History extends JPanel {
 
         // High score
         JLabel highScoreLabel = new JLabel("High score:");
-        JLabel highScoreValueLabel = new JLabel("" + Savegame.getHighScore());
+        JLabel highScoreValueLabel = new JLabel(String.valueOf(Savegame.getHighScore()));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(15, 0, 15, 30);
@@ -22,7 +22,7 @@ public class History extends JPanel {
 
         // Games played
         JLabel gamesPlayedLabel = new JLabel("Games played:");
-        JLabel gamesPlayedValueLabel = new JLabel("" + Savegame.getGamesPlayed());
+        JLabel gamesPlayedValueLabel = new JLabel(String.valueOf(Savegame.getGamesPlayed()));
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(15, 0, 15, 10);
@@ -32,7 +32,7 @@ public class History extends JPanel {
 
         // Games won
         JLabel gamesWonLabel = new JLabel("Games won:");
-        JLabel gamesWonValueLabel = new JLabel("" + Savegame.getGamesWon());
+        JLabel gamesWonValueLabel = new JLabel(String.valueOf(Savegame.getGamesWon()));
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(15, 0, 15, 30);

@@ -12,16 +12,18 @@ public class Style {
     private Styles current;
 
     private Style() {
-        UIManager.put("Button.focus", Color.TRANSLUCENT);
+        Color invisible = new Color(0, 0, 0, 0);
         UIManager.put("Button.font", Preferences.BODY);
         UIManager.put("Label.font", Preferences.BODY);
         UIManager.put("CheckBox.font", Preferences.BODY);
-        UIManager.put("CheckBox.focus", Color.TRANSLUCENT);
         UIManager.put("ComboBox.font", Preferences.BODY);
         UIManager.put("TextField.font", Preferences.BODY);
-        UIManager.put("Button.focus", new ColorUIResource(Color.TRANSLUCENT));
-        UIManager.put("CheckBox.focus", new ColorUIResource(Color.TRANSLUCENT));
-        UIManager.put("ComboBox.focus", new ColorUIResource(Color.TRANSLUCENT));
+        UIManager.put("Button.focus", new ColorUIResource(invisible));
+        UIManager.put("CheckBox.focus", new ColorUIResource(invisible));
+        UIManager.put("ComboBox.focus", new ColorUIResource(invisible));
+        UIManager.put("CheckBox.focus", new ColorUIResource(invisible));
+        UIManager.put("TextField.focus", new ColorUIResource(invisible));
+        UIManager.put("Label.focus", new ColorUIResource(invisible));
         current = null;
     }
 

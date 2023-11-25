@@ -21,6 +21,7 @@ public class Settings extends JPanel {
         String[] styles = new String[styleArrayList.size()];
         styles = styleArrayList.toArray(styles);
         JComboBox<String> styleComboBox = new JComboBox<String>(styles);
+        styleComboBox.setFocusable(false);
         styleComboBox.setSelectedIndex(Preferences.getStyle().ordinal());
         styleComboBox.addActionListener(new ActionListener() {
             @Override
@@ -46,6 +47,7 @@ public class Settings extends JPanel {
         String[] themes = new String[themeArrayList.size()];
         themes = themeArrayList.toArray(themes);
         JComboBox<String> themeComboBox = new JComboBox<String>(themes);
+        themeComboBox.setFocusable(false);
         themeComboBox.setSelectedIndex(Preferences.getTheme().ordinal());
         themeComboBox.addActionListener(new ActionListener() {
             @Override

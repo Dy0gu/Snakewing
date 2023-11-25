@@ -2,7 +2,7 @@
 
 ![logo](.github/assets/logo.png)
 
-////
+Snakeswing is a simple snake game implementation that experiments with Java singletons, building up to a very rudimentary engine. It includes an implementation of a modern app routing system to nagivate the UI outisde of the game as well as theme and style management with data permanence.
 
 ## Installation 🛠️
 
@@ -24,5 +24,5 @@
 * Launch the game:
 
   ```shell
-  ./thinkit
+  java -jar bin/Snakeswing.jar
   ```

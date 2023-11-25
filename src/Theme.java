@@ -23,6 +23,8 @@ public class Theme {
         UIManager.put("Label.foreground", secondary);
         UIManager.put("CheckBox.background", primary);
         UIManager.put("CheckBox.foreground", secondary);
+        UIManager.put("Slider.background", primary);
+        UIManager.put("Slider.foreground", secondary);
     }
 
     public static Themes getCurrent() {

@@ -9,7 +9,7 @@ Snakeswing is a simple snake game implementation that experiments with Java sing
 * Clone the repository
 
   ```shell
-  git clone https://github.com/Diogu-Simoes/Snakeswing.git
+  git clone https://github.com/Dy0gu/Snakeswing.git
   ```
 
 * Compile the source code:

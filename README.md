@@ -6,7 +6,7 @@ Snakewing is a simple snake game implementation that experiments with singletons
 
 ## Installation 🛠️
 
-* Clone the repository
+* Clone the repository:
 
   ```shell
   git clone https://github.com/Dy0gu/Snakewing.git

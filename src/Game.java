@@ -265,8 +265,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             countdown = COUNTDOWN;
             state = GameState.COUNTDOWN;
         } else if (choice == 1) {
+            // Restart
+            Savegame.setGamesPlayed(Savegame.getGamesPlayed() + 1);
             setup();
         } else {
+            // Back to menu
             Router.goBack();
         }
     }

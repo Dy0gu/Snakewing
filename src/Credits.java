@@ -27,7 +27,7 @@ public class Credits extends JPanel {
         });
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.insets = new Insets(30, 10, 15, 0);
+        gbc.insets = new Insets(30, 0, 15, 0);
         add(backButton, gbc);
     }
 }

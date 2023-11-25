@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class Settings extends JPanel {
@@ -12,7 +14,12 @@ public class Settings extends JPanel {
 
         // Style combobox
         JLabel styleLabel = new JLabel("Style:");
-        String[] styles = { "CLASSIC", "SYSTEM" };
+        ArrayList<String> styleArrayList = new ArrayList<String>();
+        for (int i = 0; i < Styles.values().length; i++) {
+            styleArrayList.add(Styles.values()[i].toString());
+        }
+        String[] styles = new String[styleArrayList.size()];
+        styles = styleArrayList.toArray(styles);
         JComboBox<String> styleComboBox = new JComboBox<String>(styles);
         styleComboBox.setSelectedIndex(Preferences.getStyle().ordinal());
         styleComboBox.addActionListener(new ActionListener() {
@@ -32,7 +39,12 @@ public class Settings extends JPanel {
 
         // Theme combo box
         JLabel themeLabel = new JLabel("Theme:");
-        String[] themes = { "DARK", "LIGHT" };
+        ArrayList<String> themeArrayList = new ArrayList<String>();
+        for (int i = 0; i < Themes.values().length; i++) {
+            themeArrayList.add(Themes.values()[i].toString());
+        }
+        String[] themes = new String[themeArrayList.size()];
+        themes = themeArrayList.toArray(themes);
         JComboBox<String> themeComboBox = new JComboBox<String>(themes);
         themeComboBox.setSelectedIndex(Preferences.getTheme().ordinal());
         themeComboBox.addActionListener(new ActionListener() {

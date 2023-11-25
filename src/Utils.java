@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Utils {
     public static Image icon() {

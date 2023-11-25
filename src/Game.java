@@ -22,7 +22,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     private int tickRate;
     private GameState state;
-    private Timer timer;
+    private Timer ticker;
     private double score;
     private double elapsed;
     private double countdown;
@@ -41,8 +41,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         tickRate = Preferences.getTickRate();
 
-        timer = new Timer(tickRate, this);
-        timer.stop();
+        ticker = new Timer(1000 / tickRate, this);
 
         if (Preferences.isFocusPause()) {
             Router.getFrame().addWindowFocusListener(new WindowAdapter() {
@@ -64,7 +63,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     public void setup() {
         state = GameState.PAUSED;
-        timer.stop();
+        ticker.stop();
 
         // Reset game info
         updated = false;
@@ -108,14 +107,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         countdown = COUNTDOWN;
         state = GameState.COUNTDOWN;
-        timer.start();
+        ticker.start();
         requestFocus();
     }
 
     private void update() {
         // Run countdown if game is starting
         if (state == GameState.COUNTDOWN) {
-            countdown -= timer.getDelay() / 1000.0;
+            countdown -= ticker.getDelay() / 1000.0;
 
             if (countdown < 1) {
                 state = GameState.PLAYING;
@@ -124,7 +123,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         // Finish game if user is in an end condition
         if (state == GameState.OVER) {
-            timer.stop();
+            ticker.stop();
 
             boolean newHighScore = false;
             Savegame.setGamesPlayed(Savegame.getGamesPlayed() + 1);
@@ -165,7 +164,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         }
 
         // Increase elapsed time
-        elapsed += timer.getDelay() / 1000.0;
+        elapsed += ticker.getDelay() / 1000.0;
 
         // Move the snake body forward
         Point previous = snake.get(0);
@@ -288,7 +287,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         if (state == GameState.COUNTDOWN) {
             g.setFont(Preferences.TITLE);
-            g.drawString("" + (int) countdown, getWidth() / 2 - 20, getHeight() / 3);
+            g.drawString(String.valueOf((int) countdown), getWidth() / 2 - 20, getHeight() / 3);
         }
 
         // Draw snake

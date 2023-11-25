@@ -1,8 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-
+import java.util.*;
 import javax.swing.*;
+import javax.swing.event.*;
 
 public class Settings extends JPanel {
 
@@ -27,7 +27,6 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Preferences.setStyle(Styles.values()[styleComboBox.getSelectedIndex()]);
-                SwingUtilities.updateComponentTreeUI(Router.getFrame());
             }
         });
         styleLabel.setLabelFor(styleComboBox);
@@ -53,7 +52,6 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Preferences.setTheme(Themes.values()[themeComboBox.getSelectedIndex()]);
-                Router.reload();
             }
         });
         themeLabel.setLabelFor(themeComboBox);
@@ -72,10 +70,6 @@ public class Settings extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Preferences.setBorderless(borderlessCheckbox.isSelected());
-                JFrame frame = Router.getFrame();
-                frame.dispose();
-                frame.setUndecorated(borderlessCheckbox.isSelected());
-                frame.setVisible(true);
             }
         });
         borderlessLabel.setLabelFor(borderlessCheckbox);
@@ -122,6 +116,37 @@ public class Settings extends JPanel {
         gbc.insets = new Insets(15, 250, 15, 0);
         add(wallsLoopCheckbox, gbc);
 
+        // Tick rate slider
+        JLabel tickRateLabel = new JLabel("Tick rate:");
+        JSlider tickRateSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, Preferences.getTickRate());
+        tickRateSlider.setFocusable(false);
+        JLabel tickRateValueLabel = new JLabel(String.valueOf(tickRateSlider.getValue()));
+        JLabel tickRateWarning = new JLabel("WARNING: High tick rates may cause lag!");
+        tickRateWarning.setForeground(Color.RED);
+        tickRateSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = tickRateSlider.getValue();
+                Preferences.setTickRate(value);
+                tickRateValueLabel.setText(String.valueOf(value));
+            }
+        });
+
+        tickRateLabel.setLabelFor(tickRateSlider);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.insets = new Insets(15, 0, 15, 15);
+        add(tickRateLabel, gbc);
+        gbc.insets = new Insets(15, 300, 15, 0);
+        add(tickRateSlider, gbc);
+        gbc.insets = new Insets(0, 530, 2, 0);
+        add(tickRateValueLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.insets = new Insets(0, 225, 15, 0);
+        add(tickRateWarning, gbc);
+
         // Back button
         JButton backButton = new JButton("BACK");
         backButton.addActionListener(new ActionListener() {
@@ -131,8 +156,20 @@ public class Settings extends JPanel {
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 7;
         gbc.insets = new Insets(30, 100, 15, 0);
         add(backButton, gbc);
+
+        // Reset button
+        JButton resetButton = new JButton("RESET");
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preferences.reset();
+
+            }
+        });
+        gbc.insets = new Insets(30, 300, 15, 0);
+        add(resetButton, gbc);
     }
 }

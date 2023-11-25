@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.io.*;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 public class Preferences {
     private static final String PATHNAME = "snakewing.prefs";
 
@@ -48,12 +51,23 @@ public class Preferences {
         }
     }
 
+    public static void reset() {
+        instance.data = new Data();
+        Preferences.setTheme(getTheme());
+        Preferences.setStyle(getStyle());
+        Preferences.setBorderless(isBorderless());
+        Preferences.setFocusPause(isFocusPause());
+        Preferences.setWallsLoop(isWallsLoop());
+        Preferences.setTickRate(getTickRate());
+    }
+
     public static Themes getTheme() {
         return instance.data.theme;
     }
 
     public static void setTheme(Themes theme) {
         Theme.setCurrent(theme);
+        Router.reload();
         instance.data.theme = theme;
         save();
     }
@@ -64,6 +78,7 @@ public class Preferences {
 
     public static void setStyle(Styles style) {
         Style.setCurrent(style);
+        SwingUtilities.updateComponentTreeUI(Router.getFrame());
         instance.data.style = style;
         save();
     }
@@ -73,6 +88,10 @@ public class Preferences {
     }
 
     public static void setBorderless(boolean borderless) {
+        JFrame frame = Router.getFrame();
+        frame.dispose();
+        frame.setUndecorated(borderless);
+        frame.setVisible(true);
         instance.data.borderless = borderless;
         save();
     }
@@ -95,12 +114,22 @@ public class Preferences {
         save();
     }
 
+    public static int getTickRate() {
+        return instance.data.tickRate;
+    }
+
+    public static void setTickRate(int tickRate) {
+        instance.data.tickRate = tickRate;
+        save();
+    }
+
     private static class Data implements Serializable {
         private Themes theme;
         private Styles style;
         private boolean borderless;
         private boolean focusPause;
         private boolean wallsloop;
+        private int tickRate;
 
         public Data() {
             this.theme = Themes.DARK;
@@ -108,6 +137,7 @@ public class Preferences {
             this.borderless = true;
             this.focusPause = true;
             this.wallsloop = false;
+            this.tickRate = 20;
         }
     }
 }

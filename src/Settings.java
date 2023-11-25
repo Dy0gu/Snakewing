@@ -121,7 +121,7 @@ public class Settings extends JPanel {
         JSlider tickRateSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, Preferences.getTickRate());
         tickRateSlider.setFocusable(false);
         JLabel tickRateValueLabel = new JLabel(String.valueOf(tickRateSlider.getValue()));
-        JLabel tickRateWarning = new JLabel("WARNING: High tick rates may cause lag!");
+        JLabel tickRateWarning = new JLabel("WARNING: Changing tick rate is experimental!");
         tickRateWarning.setForeground(Color.RED);
         tickRateSlider.addChangeListener(new ChangeListener() {
             @Override

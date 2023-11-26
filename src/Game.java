@@ -17,7 +17,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
     private static final double COUNTDOWN = 3.9;
     private static final int CELL_SIZE = 20;
-    private static final int MAX_FOOD = 2;
+
     private static final int STARTING_SNAKE_SIZE = 4;
 
     private int tickRate;
@@ -54,10 +54,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         // Game being added to the frame counts as a resize so setup is called
         addComponentListener(new ComponentAdapter() {
+
             @Override
             public void componentResized(ComponentEvent e) {
                 setup();
             }
+
         });
     }
 
@@ -74,22 +76,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         cols = getWidth() / CELL_SIZE;
         rows = getHeight() / CELL_SIZE;
 
-        // Regenerate food
-        food = new ArrayList<>();
-        while (food.size() < MAX_FOOD) {
-            Random random = new Random();
-            int x = random.nextInt(cols);
-            int y = random.nextInt(rows);
-
-            for (Point blob : food) {
-                if (blob.x == x && blob.y == y) {
-                    continue;
-                }
-            }
-
-            food.add(new Point(x, y));
-        }
-
         // Reset snake
         snake = new ArrayList<>();
         int startX = cols / 2 + STARTING_SNAKE_SIZE / 2;
@@ -98,6 +84,25 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             snake.add(new Point(startX - i, startY));
         }
         movement = Movement.RIGHT;
+
+        // Regenerate food
+        food = new ArrayList<>();
+        while (food.size() < 1) {
+            Random random = new Random();
+            int x = random.nextInt(cols);
+            int y = random.nextInt(rows);
+            boolean isSnakeBody = false;
+            for (Point snakeBody : snake) {
+                if (snakeBody.x == x && snakeBody.y == y) {
+                    isSnakeBody = true;
+                    break;
+                }
+            }
+            if (isSnakeBody) {
+                continue;
+            }
+            food.add(new Point(x, y));
+        }
 
         if (Savegame.getGamesPlayed() == 0) {
             String info = "It seems this is your first game!\nUse the arrow keys to move, press ESC to pause.";
@@ -214,17 +219,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
                 score += 1;
                 // Regenerate food
                 food = new ArrayList<>();
-                while (food.size() < MAX_FOOD) {
+                while (food.size() < 1) {
                     Random random = new Random();
                     int x = random.nextInt(cols);
                     int y = random.nextInt(rows);
-
-                    for (Point blob : food) {
-                        if (blob.x == x && blob.y == y) {
-                            continue;
+                    boolean isSnakeBody = false;
+                    for (Point snakeBody : snake) {
+                        if (snakeBody.x == x && snakeBody.y == y) {
+                            isSnakeBody = true;
+                            break;
                         }
                     }
-
+                    if (isSnakeBody) {
+                        continue;
+                    }
                     food.add(new Point(x, y));
                 }
             }

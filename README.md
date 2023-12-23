@@ -1,4 +1,4 @@
-# There's a snake in my boot! 🐍🔴
+# There's a snake in my boot! 🐍🍓
 
 ![logo](logo.png)
 
@@ -13,7 +13,6 @@ Snakewing is a simple snake game implementation that experiments with singletons
   ```
 
 - Install the JDK 17 or newer.
-
 - Compile the source code:
 
   ```shell
